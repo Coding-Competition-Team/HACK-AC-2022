@@ -1,0 +1,93 @@
+# pwn: 300x
+x-pwn:
+    &pwn
+    cap_drop:
+        - all
+    cap_add:
+        - chown
+        - setuid
+        - setgid
+        - sys_admin
+    security_opt:
+        - apparmor=unconfined
+        - seccomp=unconfined
+# web: 400x
+# misc: 700x
+services:
+  rps:
+    << : *pwn
+    build: ./rps2/
+    ports:
+      - "3000:5000"
+    restart: always
+  frozen1:
+    << : *pwn
+    build: ./frozen1/
+    ports:
+      - "3001:5000"
+    restart: always
+  fsb:
+    << : *pwn
+    build: ./fsb/
+    ports:
+      - "3002:5000"
+    restart: always
+  banana:
+    << : *pwn
+    build: ./banana/
+    ports:
+      - "3003:5000"
+    restart: always
+  postnotget:
+    build: ./postman/
+    ports:
+      - "4000:80"
+    restart: always
+  magic:
+    build: ./magic/
+    ports:
+      - "4001:80"
+    restart: always
+  sqli:
+    build: ./authskip/
+    ports:
+      - "4002:5000"
+    restart: always
+  xss:
+    build: ./XSS/
+    ports:
+      - "4003:5000"
+    restart: always
+  ssti:
+    build: ./ssti/
+    ports:
+      - "4004:5000"
+    restart: always
+  fatherboat:
+    build: ./fatherboat/
+    ports:
+      - "4005:5000"
+    restart: always
+  dh:
+    build: ./DH/
+    ports:
+      - "4006:80"
+    restart: always
+  gacha:
+    build: ./gacha/
+    ports:
+      - "7000:8000"
+    restart: always
+  emacs:
+    build: ./emacs/
+    ports:
+      - "7001:50001"
+    restart: always
+  vim:
+    build: ./vim/
+    ports: 
+      - "7002:50000"
+    restart: always
+  help:
+    build: ./help/
+    restart: always

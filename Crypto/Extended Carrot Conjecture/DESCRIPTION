@@ -1,0 +1,20 @@
+**Hard challenge!**
+
+There's something mysterious about carrots.  
+We talk about their color, their taste, their texture, and the funny way they tend to "spin" when you peel one.  
+Most of the time we don't bother.  
+Cousin Karl helped himself to a fresh one this morning, but discovered it didn't have much flavor.  
+Why do we grow carrots anyway?  
+That's the problem I come to struggle with.  
+But I'm sure I'm not the only one.  
+
+Recently, I've been working on an Extended Carrot Conjecture that will finally settle this problem. I just need someone
+to help me prove it. Believe it or not, I have managed to model the carrot mystery as an Elliptic Curve with the formula
+as shown in the attachment.
+
+All you need to do is calculate the private key, and use it as a key to decrypt the following ciphertext encoded in AES (ECB Mode):
+`8409b13eb773b3fa396799b35541e923f793f9c694e7d089354c6c04f3b1921e99ed5e803b2b81dac64d099b517d88666a2bec925df6483b17eb0be0f05958c4`  
+This will provide you with a flag to prove to me that you've cracked the code.
+Go forth, and solve this mystery.
+
+Author: Bennett

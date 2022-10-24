@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Workshop 1</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Workshop-1.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" "="" defer=""></script>
+    <meta name="generator" content="Nicepage 4.17.13, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Workshop 1">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-black u-clearfix u-header u-header" id="sec-fc45"><div class="u-align-left u-clearfix u-sheet u-sheet-1"></div></header>
+    <section class="u-align-center u-black u-clearfix u-section-1" id="sec-e3e9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h3 class="u-text u-text-default u-text-1">Workshop 1<br>
+        </h3>
+        <p class="u-align-left u-text u-text-default u-text-2">
+          <span style="font-size: 1rem;">We are given these public parameters, lets see if we can find the private key.<br>
+            <br>p= 104711<br> g= 104642<br> g^a= 1975106301245017026503289083852911126512096109792117074551298200678459015168<br> g^b= 1504368685604858602888119532110545611422351872<br>
+            <br>Firstly, we need to find out the secret values of a and b, before we can find the
+ secret/shared key.<br>
+            <br>Notice that p, g, gᵃ mod p and gᵇ mod p is given. To obtain the value of b, which will thereafter help us find the secret key, we need to solve the discrete logarithm problem. This is where given h, where h equals to gᵇ mod p, we have to determine the value of b. With the value of b, one can compute the secret shared key by computing (gᵃ)ᵇ mod p which is equals to gᵃᵇ mod p.<br>
+            <br>In this example, we are using this&nbsp;<a href="https://www.alpertron.com.ar/DILOG.HTM" rel="nofollow" class="u-active-none u-border-none u-btn u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1">online discrete logarithm calculator</a>. Alternatively, you are recommended to try and use <a href="https://www.sagemath.org/" rel="nofollow" class="u-active-none u-border-none u-btn u-button-style u-hover-none u-none u-text-palette-1-base u-btn-2">SageMath</a>, a powerful Computer Algebra System (CAS) application used for mathematics.
+          </span>
+          <span style="font-size: 1rem;">
+            <br>
+          </span>
+          <br>
+        </p>
+        <img class="u-image u-image-default u-image-1" src="images/image-2.png" alt="" data-image-width="1920" data-image-height="317">
+        <img class="u-image u-image-default u-image-2" src="images/image.png" alt="" data-image-width="1920" data-image-height="320">
+        <p class="u-align-center u-text u-text-3">We have found that:<br>a: 15<br>b: 9<br>
+          <br>After this, we can just use the power operator in python to find the secret key like so:&nbsp;<br>pow(g, a*b, p)<br>
+          <br>Try everything for yourself from the beginning. Did you get 92626 for the value of the secret key? If you did, great job! 
+        </p>
+        <p class="u-align-left u-text u-text-default u-text-4">Move on to <a href="Workshop-2.html" data-page-id="2783036" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-3">Workshop 2</a>, which will give you the flag for this challenge. Good luck.
+        </p>
+      </div>
+    </section>
+    
+    
+
+</body></html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+	</head>
+
+	<body>
+		<div class="header">
+			<h2>Xross-Site Scripting</h2>
+		</div>
+		<div class="post">
+			<form action="/post" method="post" target="hidden">
+				<label for="body">Post content:</label>
+				<input type="text" id="body" name="body">
+				<input type="submit">
+			</form>
+			<div id="outlet" class="outlet"></div>
+		</div>
+		<script>
+			function onLoad() {
+				document.getElementById("outlet").innerHTML = document.getElementById("hidden").contentDocument.body.innerHTML;
+			} 
+		</script>
+		<iframe id="hidden"	name="hidden" onload="onLoad()"></iframe>
+	</body>
+</html>
