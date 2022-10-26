@@ -7,7 +7,7 @@ The challenges were made by the following contributors:
 * [Eldoofus](https://github.com/Eldoofus)
 * [beanbeah](https://github.com/beanbeah)
 * [Wealthyturtle](https://github.com/Wealthyturtle)
-* [absurdtiget](https://github.com/absurdtiger)
+* [absurdtiger](https://github.com/absurdtiger)
 * [laptopoutofbattery](https://github.com/laptopoutofbattery)
 * [ZakuroSoda](https://github.com/ZakuroSoda)
 
