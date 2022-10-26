@@ -1,0 +1,10 @@
+**Hard challenge!**
+
+I thought exiting Vim was hard enough... now I can't even exit Python??  
+
+Your goal is to get a shell, good luck!  
+
+`nc alpha.8059blank.ml 7002`  
+`nc beta.8059blank.ml 7002`  
+
+Author: Lucas

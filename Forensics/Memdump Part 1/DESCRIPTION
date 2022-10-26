@@ -1,0 +1,10 @@
+Could you find what website was visited? There is a plugin for volatility that will allow us to extract chrome history Perhaps it might give us something useful...  
+
+Wrap the string you find with the ACSI{...} flag format.  
+
+
+[Volatility](https://www.volatilityfoundation.org/releases)  
+[Volatility Cheat Sheet](https://book.hacktricks.xyz/generic-methodologies-and-resources/basic-forensic-methodology/memory-dump-analysis/volatility-examples)  
+[Google drive mirror](https://drive.google.com/file/d/1Z0m-83Cmt2eY0Zh_XoiTIDWXycDjBx2k/view?usp=sharing)  
+
+Author: Samuel

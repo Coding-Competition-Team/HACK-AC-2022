@@ -1,0 +1,7 @@
+A little crypto challenge to get you warmed up! 
+
+Wrap the plaintext found in ACSI{}, treat "0" as the space character, and ensure that the flag is all uppercase.
+
+Example flag format: ACSI{WELCOME TO THE CTF}
+
+Author: Bennett

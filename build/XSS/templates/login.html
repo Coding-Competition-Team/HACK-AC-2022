@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+	</head>
+
+	<body>
+		<div class="header">
+			<h2>Xross-Site Scripting</h2>
+		</div>
+		<div class="login-form">
+			<p>Please login to view posts</p>
+			<form action="/login" method="post">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username">
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password">
+				<input type="submit">
+			</form>
+		</div>
+	</body>
+</html>

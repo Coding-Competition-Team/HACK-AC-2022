@@ -1,0 +1,10 @@
+Format string vulnerabilities are extremely potent in binary exploitation. With a simple mistake, an attacker can achieve both
+arbitrary read and write! But this program doesn't allow us to write to any memory region we like, so we can't repoint a
+function call to `system('/bin/sh')` in the GOT ... Is it unsolvable??
+
+Note that you might need to write a fuzzer for this challenge.
+
+`nc alpha.8059blank.ml 3002`  
+`nc beta.8059blank.ml 3002`  
+
+Author: Lucas

@@ -1,0 +1,1 @@
+20 Your payload will look like this: b'A'*264 + canary + b'A'*8 + ret gadget + win func
