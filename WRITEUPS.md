@@ -541,6 +541,17 @@ With this in mind, we can simply half all the hex values before converting them,
 Flag: `ACSI{1M4G1n3_progR4mm1ng_W17H_D4r7_4nd_NO7_B31ng_4bL3_7o_u5e_MUl71pl3_1NH3r174Nc3_:(((((}`
 
 
+### Imitation  
+
+>Someone sent you this file with an enigmatic message attached:
+>
+>}-th{_3d0ar@sCI1Anc4RSlHNP  
+>ABCDEFGHIJKLMNOPQRSTUVWXYZ  
+>
+>Author: Elijah
+
+Writeup [here](https://hackmd.io/@RTiPfWohT42qK7LIpPfl6Q/HkfVNuz4j)
+
 ## Web
 
 ### Fatherboat v2.0
