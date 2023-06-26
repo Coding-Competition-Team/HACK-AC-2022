@@ -10,6 +10,7 @@ The challenges were made by the following contributors:
 * [absurdtiger](https://github.com/absurdtiger)
 * [laptopoutofbattery](https://github.com/laptopoutofbattery)
 * [ZakuroSoda](https://github.com/ZakuroSoda)
+* [lampardnk](https://github.com/lampardnk)
 
 Deployment files are in the build folder. Challenges are sorted into folders based on category. Flags have the format of `ACSI{}`.  
 
